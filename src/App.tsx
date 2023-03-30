@@ -33,7 +33,7 @@ import callOfBrine from "/IconPerks_callOfBrine.webp";
 import calmSpirit from "/IconPerks_calmSpirit.webp";
 import corruptIntervention from "/IconPerks_corruptIntervention.webp";
 import coulrophobia from "/IconPerks_coulrophobia.webp";
-import coupDeGrace from "/IconPerks_coupDeGr%3Fce.webp";
+import coupDeGrace from "/IconPerks_coupDeGrace.webp";
 import cutLoose from "/IconPerks_cutLoose.webp";
 import danceWithMe from "/IconPerks_danceWithMe.webp";
 import darkDevotion from "/IconPerks_darkDevotion.webp";
@@ -411,7 +411,7 @@ function App() {
   };
 
   return (
-    <div className="flex h-screen flex-col justify-center gap-20 bg-gradient-to-b from-stone-500 to-stone-700">
+    <div className="flex h-screen flex-col justify-center gap-20 bg-gradient-to-b from-stone-900 to-stone-950">
       <>
         <h1 className="text-center text-5xl text-slate-900">
           Which icon is correct?
