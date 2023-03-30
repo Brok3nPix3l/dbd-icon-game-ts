@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Icon from "./Icon";
 
 import aceInTheHole from "/IconPerks_aceInTheHole.webp";
@@ -376,17 +376,11 @@ function App() {
     console.log("correct");
     setScore((prev) => prev + 1);
     setCurrentAnswer("correct");
-    setTimeout(() => {
-      setCurrentAnswer(null);
-    }, 1000);
   };
 
   const wrongAnswer = () => {
     console.log("wrong");
     setCurrentAnswer("wrong");
-    setTimeout(() => {
-      setCurrentAnswer(null);
-    }, 1000);
   };
 
   const handleSelectedIcon = (correct: boolean) => {
@@ -394,6 +388,13 @@ function App() {
     setTotalGuesses((prev) => prev + 1);
     generateNewIcons();
   };
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setCurrentAnswer(null);
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [totalGuesses]);
 
   const generateNewIcons = () => {
     setTransformationsPermutation(
