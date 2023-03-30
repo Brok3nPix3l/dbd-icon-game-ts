@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import Icon from "./Icon";
 
 import aceInTheHole from "/IconPerks_aceInTheHole.webp";
@@ -61,7 +61,7 @@ import fogwise from "/IconPerks_fogwise.webp";
 import franklinsDemise from "/IconPerks_franklinsDemise.webp";
 import friendlyCompetition from "/IconPerks_friendlyCompetition.webp";
 import furtiveChase from "/IconPerks_furtiveChase.webp";
-import gameAFoot from "/IconPerks_gameAFoot.webp";
+import gameAFoot from "/IconPerks_gameAfoot.webp";
 import guardian from "/IconPerks_guardian.webp";
 import hangmansTrick from "/IconPerks_hangmansTrick.webp";
 import headOn from "/IconPerks_headOn.webp";
@@ -175,6 +175,8 @@ import shuffleArray from "shuffle-array";
 function App() {
   const [score, setScore] = useState(0);
   const [totalGuesses, setTotalGuesses] = useState(0);
+  type Answer = null | "correct" | "wrong";
+  const [currentAnswer, setCurrentAnswer] = useState<Answer>(null);
   const [perks, setPerks] = useState(
     shuffleArray([
       aceInTheHole,
@@ -348,6 +350,14 @@ function App() {
   );
   const [perkIndex, setPerkIndex] = useState(0);
 
+  const none: ICON_TRANSFORMATION = "none";
+  const invertY: ICON_TRANSFORMATION = "invert-y";
+  const rotate180: ICON_TRANSFORMATION = "rotate 180";
+  const invertYRotate180: ICON_TRANSFORMATION = "invert-y rotate 180";
+  const [transformationsPermutation, setTransformationsPermutation] = useState<
+    ICON_TRANSFORMATION[]
+  >(shuffleArray([none, invertY, rotate180, invertYRotate180]));
+
   // TODO: enforce image sizes and make them responsive
   // TODO: survivor and killer toggles
   // type perkObject = {
@@ -361,19 +371,22 @@ function App() {
   // }, [perks])
 
   const currentPerk = perks[perkIndex];
-  for (let i = 0; i < perks.length; i++) {
-    if (perks.indexOf(perks[i]) !== perks.lastIndexOf(perks[i])) {
-      console.log(`"${perks[i]}" appears more than once`);
-    }
-  }
 
   const correctAnswer = () => {
     console.log("correct");
     setScore((prev) => prev + 1);
+    setCurrentAnswer("correct");
+    setTimeout(() => {
+      setCurrentAnswer(null);
+    }, 1000);
   };
 
   const wrongAnswer = () => {
     console.log("wrong");
+    setCurrentAnswer("wrong");
+    setTimeout(() => {
+      setCurrentAnswer(null);
+    }, 1000);
   };
 
   const handleSelectedIcon = (correct: boolean) => {
@@ -383,6 +396,9 @@ function App() {
   };
 
   const generateNewIcons = () => {
+    setTransformationsPermutation(
+      shuffleArray([none, invertY, rotate180, invertYRotate180])
+    );
     if (perkIndex === perks.length - 1) {
       console.log("Shuffling perks");
       setPerks((prev) => shuffleArray(prev));
@@ -393,31 +409,40 @@ function App() {
     setPerkIndex((prev) => prev + 1);
   };
 
-  const none: ICON_TRANSFORMATION = "none";
-  const invertY: ICON_TRANSFORMATION = "invert-y";
-  const rotate180: ICON_TRANSFORMATION = "rotate 180";
-  const invertYRotate180: ICON_TRANSFORMATION = "invert-y rotate 180";
-
   return (
     <div className="flex h-screen flex-col justify-center gap-20 bg-gradient-to-b from-stone-500 to-stone-700">
       <>
-        <h1 className="text-center text-5xl text-slate-900">Which icon is correct?</h1>
+        <h1 className="text-center text-5xl text-slate-900">
+          Which icon is correct?
+        </h1>
         <div className="flex justify-center gap-1 p-2">
-          {shuffleArray([none, invertY, rotate180, invertYRotate180]).map(
-            (transform: ICON_TRANSFORMATION) => {
-              return (
-                <Icon
-                  imageSrc={currentPerk}
-                  handleSelectedIcon={handleSelectedIcon}
-                  transform={transform}
-                  key={uuid()}
-                />
-              );
-            }
-          )}
+          {/* TODO: this gets run any time the component re-renders. need to fix this, but it works for now */}
+          {transformationsPermutation.map((transform: ICON_TRANSFORMATION) => {
+            return (
+              <Icon
+                imageSrc={currentPerk}
+                handleSelectedIcon={handleSelectedIcon}
+                transform={transform}
+                key={uuid()}
+              />
+            );
+          })}
         </div>
         <div className="flex justify-center text-4xl text-slate-900">
-          Score: {score} {totalGuesses === 0 ? "" : `/ ${totalGuesses}`}
+          Score:{" "}
+          <span
+            className={`whitespace-pre ${
+              currentAnswer === "correct"
+                ? "text-green-400"
+                : currentAnswer === "wrong"
+                ? "text-red-500"
+                : ""
+            }`}
+          >
+            {" "}
+            {score}{" "}
+          </span>
+          <span>{totalGuesses === 0 ? "" : `/ ${totalGuesses}`}</span>
         </div>
       </>
     </div>
