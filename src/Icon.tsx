@@ -14,6 +14,7 @@ export default function Icon(props: IconProps) {
           src={props.imageSrc}
           className={`cursor-pointer ${props.transform === 'invert-y' && '-scale-x-100'} ${props.transform === 'rotate 180' && 'rotate-180'} ${props.transform === 'invert-y rotate 180' && '-scale-x-100 rotate-180'}`}
           onClick={() => props.handleSelectedIcon(props.transform === 'none')}
+          draggable={false}
         />
     </div>
   );
