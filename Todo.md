@@ -1,4 +1,2 @@
-- enforce image sizes
 - click out of modal closes modal
 - different background "something like DBD" - Russell
-- 2x2 icon grid on mobile to make icons larger

@@ -486,12 +486,12 @@ function App() {
           )}
         </div>
       </div>
-      <div className="flex h-screen flex-col justify-center gap-20">
+      <div className="flex h-screen flex-col justify-center min-[800px]:gap-20">
         <>
           <h1 className="text-center text-5xl text-slate-800 dark:text-slate-100">
             Which icon is correct?
           </h1>
-          <div className="flex justify-center gap-1 p-2">
+          <div className="flex flex-wrap justify-center gap-1 p-2 min-[800px]:flex-nowrap">
             {transformationsPermutation.map(
               (transform: ICON_TRANSFORMATION) => {
                 return (
