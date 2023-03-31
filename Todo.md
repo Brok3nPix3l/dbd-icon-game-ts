@@ -1,0 +1,2 @@
+- enforce image sizes
+- click out of modal closes modal

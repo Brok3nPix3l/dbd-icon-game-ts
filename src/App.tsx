@@ -46,7 +46,7 @@ import deerstalker from "/IconPerks_deerstalker.webp";
 import dejaVu from "/IconPerks_dejaVu.webp";
 import deliverance from "/IconPerks_deliverance.webp";
 import detectivesHunch from "/IconPerks_detectivesHunch.webp";
-import discorance from "/IconPerks_discordance.webp";
+import discordance from "/IconPerks_discordance.webp";
 import dissolution from "/IconPerks_dissolution.webp";
 import distortion from "/IconPerks_distortion.webp";
 import distressing from "/IconPerks_distressing.webp";
@@ -168,11 +168,15 @@ import wereGonnaLiveForever from "/IconPerks_wereGonnaLiveForever.webp";
 import whispers from "/IconPerks_whispers.webp";
 import windowsOfOpportunity from "/IconPerks_windowsOfOpportunity.webp";
 import zanshinTactics from "/IconPerks_zanshinTactics.webp";
+
 import { ICON_TRANSFORMATION } from "./Icon";
 import { v4 as uuid } from "uuid";
 import shuffleArray from "shuffle-array";
 import darkMode from "./images/dark-mode.png";
 import lightMode from "./images/light-mode.png";
+import Settings from "./Settings";
+
+export type PerksSetting = "all" | "survivor" | "killer";
 
 function App() {
   const [score, setScore] = useState(0);
@@ -186,178 +190,190 @@ function App() {
       ? "dark"
       : "light"
   );
-  const [perks, setPerks] = useState(
-    shuffleArray([
-      aceInTheHole,
-      adrenaline,
-      aftercare,
-      agitation,
-      alert,
-      aNursesCalling,
-      anyMeansNecessary,
-      appraisal,
-      autodidact,
-      backgroundPlayer,
-      balancedLanding,
-      bamboozle,
-      barbecueAndChilli,
-      beastOfPrey,
-      bitterMurmur,
-      bloodEcho,
-      bloodhound,
-      bloodRush,
-      bloodWarden,
-      boilOver,
-      bond,
-      boonDarkTheory,
-      borrowedTime,
-      botanyKnowledge,
-      breakdown,
-      breakout,
-      brutalStrength,
-      buckleUp,
-      callOfBrine,
-      calmSpirit,
-      corruptIntervention,
-      coulrophobia,
-      coupDeGrace,
-      cutLoose,
-      danceWithMe,
-      darkDevotion,
-      darknessRevealed,
-      darkSense,
-      deadHard,
-      deception,
-      decisiveStrike,
-      deerstalker,
-      dejaVu,
-      deliverance,
-      detectivesHunch,
-      discorance,
-      dissolution,
-      distortion,
-      distressing,
-      diversion,
-      dyingLight,
-      empathicConnection,
-      empathy,
-      enduring,
-      fireUp,
-      flipFlop,
-      fogwise,
-      franklinsDemise,
-      friendlyCompetition,
-      furtiveChase,
-      gameAFoot,
-      guardian,
-      hangmansTrick,
-      headOn,
-      hexDevourHope,
-      hexFaceTheDarkness,
-      hexHauntedGround,
-      hexHuntressLullaby,
-      hexNoOneEscapesDeath,
-      hexRuin,
-      hexTheThirdSeal,
-      hexThrillOfTheHunt,
-      hoarder,
-      hope,
-      hubris,
-      imAllEars,
-      infectiousFright,
-      innerFocus,
-      innerHealing,
-      insidious,
-      ironGrasp,
-      ironMaiden,
-      ironWill,
-      kindred,
-      knockOut,
-      leader,
-      leftBehind,
-      leverage,
-      lightborn,
-      lightweight,
-      lithe,
-      luckyBreak,
-      madGrid,
-      makeYourChoice,
-      mercilessStorm,
-      mettleOfMan,
-      monitorAndAbuse,
-      nemesis,
-      noMither,
-      noOneLeftBehind,
-      nowhereToHide,
-      objectOfObsession,
-      openHanded,
-      oppression,
-      overcharge,
-      overwhelmingPresence,
-      overzealous,
-      parentalGuidance,
-      pharmacy,
-      playWithYourFood,
-      plunderersInstinct,
-      poised,
-      popGoesTheWeasel,
-      potentialEnergy,
-      powerStruggle,
-      predator,
-      premonition,
-      proveThyself,
-      quickAndQuiet,
-      quickGambit,
-      rancor,
-      rememberMe,
-      renewal,
-      residualManifest,
-      resilience,
-      saboteur,
-      saveTheBestForLast,
-      scourgeHookFloodsOfRage,
-      scourgeHookMonstrousShrine,
-      selfCare,
-      septicTouch,
-      shadowborn,
-      shatteredHope,
-      sloppyButcher,
-      smallGame,
-      soleSurvivor,
-      solidarity,
-      spiesFromTheShadows,
-      spineChill,
-      spiritFury,
-      sprintBurst,
-      stakeOut,
-      streetwise,
-      stridor,
-      surveillance,
-      teamworkCollectiveStealth,
-      teamworkPowerOfTwo,
-      technician,
-      tenacity,
-      territorialImperitive,
-      thanatophobia,
-      thisIsNotHappening,
-      thrillingTremors,
-      thwack,
-      tinkerer,
-      unbreakable,
-      unnervingPresence,
-      unrelenting,
-      upTheAnte,
-      urbanEvasion,
-      vigil,
-      wakeUp,
-      wellMakeIt,
-      wereGonnaLiveForever,
-      whispers,
-      windowsOfOpportunity,
-      zanshinTactics,
-    ])
-  );
+  const perksArray: Perk[] = [
+    { imageSource: aceInTheHole, role: "survivor" },
+    { imageSource: adrenaline, role: "survivor" },
+    { imageSource: aftercare, role: "survivor" },
+    { imageSource: agitation, role: "killer" },
+    { imageSource: alert, role: "survivor" },
+    { imageSource: aNursesCalling, role: "killer" },
+    { imageSource: anyMeansNecessary, role: "survivor" },
+    { imageSource: appraisal, role: "survivor" },
+    { imageSource: autodidact, role: "survivor" },
+    { imageSource: backgroundPlayer, role: "survivor" },
+    { imageSource: balancedLanding, role: "survivor" },
+    { imageSource: bamboozle, role: "killer" },
+    { imageSource: barbecueAndChilli, role: "killer" },
+    { imageSource: beastOfPrey, role: "killer" },
+    { imageSource: bitterMurmur, role: "killer" },
+    { imageSource: bloodEcho, role: "killer" },
+    { imageSource: bloodhound, role: "killer" },
+    { imageSource: bloodRush, role: "survivor" },
+    { imageSource: bloodWarden, role: "killer" },
+    { imageSource: boilOver, role: "survivor" },
+    { imageSource: bond, role: "survivor" },
+    { imageSource: boonDarkTheory, role: "survivor" },
+    { imageSource: borrowedTime, role: "survivor" },
+    { imageSource: botanyKnowledge, role: "survivor" },
+    { imageSource: breakdown, role: "survivor" },
+    { imageSource: breakout, role: "survivor" },
+    { imageSource: brutalStrength, role: "killer" },
+    { imageSource: buckleUp, role: "survivor" },
+    { imageSource: callOfBrine, role: "killer" },
+    { imageSource: calmSpirit, role: "survivor" },
+    { imageSource: corruptIntervention, role: "killer" },
+    { imageSource: coulrophobia, role: "killer" },
+    { imageSource: coupDeGrace, role: "killer" },
+    { imageSource: cutLoose, role: "survivor" },
+    { imageSource: danceWithMe, role: "survivor" },
+    { imageSource: darkDevotion, role: "killer" },
+    { imageSource: darknessRevealed, role: "killer" },
+    { imageSource: darkSense, role: "survivor" },
+    { imageSource: deadHard, role: "survivor" },
+    { imageSource: deception, role: "survivor" },
+    { imageSource: decisiveStrike, role: "survivor" },
+    { imageSource: deerstalker, role: "killer" },
+    { imageSource: dejaVu, role: "survivor" },
+    { imageSource: deliverance, role: "survivor" },
+    { imageSource: detectivesHunch, role: "survivor" },
+    { imageSource: discordance, role: "killer" },
+    { imageSource: dissolution, role: "killer" },
+    { imageSource: distortion, role: "survivor" },
+    { imageSource: distressing, role: "killer" },
+    { imageSource: diversion, role: "survivor" },
+    { imageSource: dyingLight, role: "killer" },
+    { imageSource: empathicConnection, role: "survivor" },
+    { imageSource: empathy, role: "survivor" },
+    { imageSource: enduring, role: "killer" },
+    { imageSource: fireUp, role: "killer" },
+    { imageSource: flipFlop, role: "survivor" },
+    { imageSource: fogwise, role: "survivor" },
+    { imageSource: franklinsDemise, role: "killer" },
+    { imageSource: friendlyCompetition, role: "survivor" },
+    { imageSource: furtiveChase, role: "killer" },
+    { imageSource: gameAFoot, role: "killer" },
+    { imageSource: guardian, role: "survivor" },
+    { imageSource: hangmansTrick, role: "killer" },
+    { imageSource: headOn, role: "survivor" },
+    { imageSource: hexDevourHope, role: "killer" },
+    { imageSource: hexFaceTheDarkness, role: "killer" },
+    { imageSource: hexHauntedGround, role: "killer" },
+    { imageSource: hexHuntressLullaby, role: "killer" },
+    { imageSource: hexNoOneEscapesDeath, role: "killer" },
+    { imageSource: hexRuin, role: "killer" },
+    { imageSource: hexTheThirdSeal, role: "killer" },
+    { imageSource: hexThrillOfTheHunt, role: "killer" },
+    { imageSource: hoarder, role: "killer" },
+    { imageSource: hope, role: "survivor" },
+    { imageSource: hubris, role: "killer" },
+    { imageSource: imAllEars, role: "killer" },
+    { imageSource: infectiousFright, role: "killer" },
+    { imageSource: innerFocus, role: "survivor" },
+    { imageSource: innerHealing, role: "survivor" },
+    { imageSource: insidious, role: "killer" },
+    { imageSource: ironGrasp, role: "killer" },
+    { imageSource: ironMaiden, role: "killer" },
+    { imageSource: ironWill, role: "survivor" },
+    { imageSource: kindred, role: "survivor" },
+    { imageSource: knockOut, role: "killer" },
+    { imageSource: leader, role: "survivor" },
+    { imageSource: leftBehind, role: "survivor" },
+    { imageSource: leverage, role: "killer" },
+    { imageSource: lightborn, role: "killer" },
+    { imageSource: lightweight, role: "survivor" },
+    { imageSource: lithe, role: "survivor" },
+    { imageSource: luckyBreak, role: "survivor" },
+    { imageSource: madGrid, role: "killer" },
+    { imageSource: makeYourChoice, role: "killer" },
+    { imageSource: mercilessStorm, role: "killer" },
+    { imageSource: mettleOfMan, role: "survivor" },
+    { imageSource: monitorAndAbuse, role: "killer" },
+    { imageSource: nemesis, role: "killer" },
+    { imageSource: noMither, role: "survivor" },
+    { imageSource: noOneLeftBehind, role: "survivor" },
+    { imageSource: nowhereToHide, role: "killer" },
+    { imageSource: objectOfObsession, role: "survivor" },
+    { imageSource: openHanded, role: "survivor" },
+    { imageSource: oppression, role: "killer" },
+    { imageSource: overcharge, role: "killer" },
+    { imageSource: overwhelmingPresence, role: "killer" },
+    { imageSource: overzealous, role: "survivor" },
+    { imageSource: parentalGuidance, role: "survivor" },
+    { imageSource: pharmacy, role: "survivor" },
+    { imageSource: playWithYourFood, role: "killer" },
+    { imageSource: plunderersInstinct, role: "survivor" },
+    { imageSource: poised, role: "survivor" },
+    { imageSource: popGoesTheWeasel, role: "killer" },
+    { imageSource: potentialEnergy, role: "survivor" },
+    { imageSource: powerStruggle, role: "survivor" },
+    { imageSource: predator, role: "killer" },
+    { imageSource: premonition, role: "survivor" },
+    { imageSource: proveThyself, role: "survivor" },
+    { imageSource: quickAndQuiet, role: "survivor" },
+    { imageSource: quickGambit, role: "survivor" },
+    { imageSource: rancor, role: "killer" },
+    { imageSource: rememberMe, role: "killer" },
+    { imageSource: renewal, role: "survivor" },
+    { imageSource: residualManifest, role: "survivor" },
+    { imageSource: resilience, role: "survivor" },
+    { imageSource: saboteur, role: "survivor" },
+    { imageSource: saveTheBestForLast, role: "killer" },
+    { imageSource: scourgeHookFloodsOfRage, role: "killer" },
+    { imageSource: scourgeHookMonstrousShrine, role: "killer" },
+    { imageSource: selfCare, role: "survivor" },
+    { imageSource: septicTouch, role: "killer" },
+    { imageSource: shadowborn, role: "killer" },
+    { imageSource: shatteredHope, role: "killer" },
+    { imageSource: sloppyButcher, role: "killer" },
+    { imageSource: smallGame, role: "survivor" },
+    { imageSource: soleSurvivor, role: "survivor" },
+    { imageSource: solidarity, role: "survivor" },
+    { imageSource: spiesFromTheShadows, role: "killer" },
+    { imageSource: spineChill, role: "survivor" },
+    { imageSource: spiritFury, role: "killer" },
+    { imageSource: sprintBurst, role: "survivor" },
+    { imageSource: stakeOut, role: "survivor" },
+    { imageSource: streetwise, role: "survivor" },
+    { imageSource: stridor, role: "killer" },
+    { imageSource: surveillance, role: "killer" },
+    { imageSource: teamworkCollectiveStealth, role: "survivor" },
+    { imageSource: teamworkPowerOfTwo, role: "survivor" },
+    { imageSource: technician, role: "survivor" },
+    { imageSource: tenacity, role: "survivor" },
+    { imageSource: territorialImperitive, role: "killer" },
+    { imageSource: thanatophobia, role: "killer" },
+    { imageSource: thisIsNotHappening, role: "survivor" },
+    { imageSource: thrillingTremors, role: "killer" },
+    { imageSource: thwack, role: "killer" },
+    { imageSource: tinkerer, role: "killer" },
+    { imageSource: unbreakable, role: "survivor" },
+    { imageSource: unnervingPresence, role: "killer" },
+    { imageSource: unrelenting, role: "killer" },
+    { imageSource: upTheAnte, role: "survivor" },
+    { imageSource: urbanEvasion, role: "survivor" },
+    { imageSource: vigil, role: "survivor" },
+    { imageSource: wakeUp, role: "survivor" },
+    { imageSource: wellMakeIt, role: "survivor" },
+    { imageSource: wereGonnaLiveForever, role: "survivor" },
+    { imageSource: whispers, role: "killer" },
+    { imageSource: windowsOfOpportunity, role: "survivor" },
+    { imageSource: zanshinTactics, role: "killer" },
+  ];
+  const [perks, setPerks] = useState<Perk[]>(shuffleArray(perksArray));
   const [perkIndex, setPerkIndex] = useState(0);
+  const [perksSetting, setPerksSetting] = useState<PerksSetting>("all");
+  useEffect(() => {
+    resetGame();
+    if (perksSetting === "all") setPerks(shuffleArray(perksArray));
+    if (perksSetting === "survivor") setPerks(shuffleArray(survivorPerks));
+    if (perksSetting === "killer") setPerks(shuffleArray(killerPerks));
+  }, [perksSetting]);
+
+  const resetGame = () => {
+    setScore(0);
+    setTotalGuesses(0);
+    setPerkIndex(0);
+  };
 
   const none: ICON_TRANSFORMATION = "none";
   const invertY: ICON_TRANSFORMATION = "invert-y";
@@ -367,19 +383,18 @@ function App() {
     ICON_TRANSFORMATION[]
   >(shuffleArray([none, invertY, rotate180, invertYRotate180]));
 
-  // TODO: enforce image sizes and make them responsive
-  // TODO: survivor and killer toggles
-  // type perkObject = {
-  //   imageSource: string,
-  //   role: "survivor" | "killer"
-  // }
-  // const survivorPerks = useCallback(() => {
-  //   perks.filter((perkObject: perkObject) => {
-  //     perkObject.role === "survivor";
-  //   })
-  // }, [perks])
+  type Perk = {
+    imageSource: string;
+    role: "survivor" | "killer";
+  };
+  const survivorPerks = perksArray.filter((perk) => {
+    return perk.role === "survivor";
+  });
+  const killerPerks = perksArray.filter((perk) => {
+    return perk.role === "killer";
+  });
 
-  const currentPerk = perks[perkIndex];
+  const currentPerk = perks[perkIndex].imageSource;
 
   const correctAnswer = () => {
     console.log("correct");
@@ -445,23 +460,31 @@ function App() {
   };
 
   return (
-    <div className="h-screen bg-gradient-to-b from-neutral-50 to-neutral-600 dark:from-neutral-800 dark:to-neutral-900">
-      <div className="absolute right-0 top-0 flex gap-4 pr-2">
-        {colorTheme === "dark" ? (
-          <button
-            className="w-10"
-            onClick={() => handleColorThemeToggle("light")}
-          >
-            <img src={lightMode} />
-          </button>
-        ) : (
-          <button
-            className="w-10"
-            onClick={() => handleColorThemeToggle("dark")}
-          >
-            <img src={darkMode} />
-          </button>
-        )}
+    <div className="h-screen bg-gradient-to-b from-neutral-100 to-neutral-400 dark:from-neutral-800 dark:to-neutral-900">
+      <div className="absolute top-0 flex w-screen justify-between p-2">
+        <div>
+          <Settings setPerksSetting={setPerksSetting} />
+        </div>
+        <div className="capitalize text-slate-800 dark:text-slate-100">
+          Perks: {perksSetting}
+        </div>
+        <div>
+          {colorTheme === "dark" ? (
+            <button
+              className="w-10"
+              onClick={() => handleColorThemeToggle("light")}
+            >
+              <img src={lightMode} />
+            </button>
+          ) : (
+            <button
+              className="w-10"
+              onClick={() => handleColorThemeToggle("dark")}
+            >
+              <img src={darkMode} />
+            </button>
+          )}
+        </div>
       </div>
       <div className="flex h-screen flex-col justify-center gap-20">
         <>
