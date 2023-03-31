@@ -15,12 +15,22 @@ export default function Settings(props: SettingsProps) {
     setModalOpen(false);
     props.setPerksSetting(setting);
   };
+
+  const handleClickedOutsideOfModal = () => {
+    setModalOpen(false);
+  };
+
   return (
     <>
       <button className="w-10">
         <img src={settings} onClick={() => setModalOpen(true)} />
       </button>
-      {modalOpen && <Modal setPerksSetting={handlePerksSetting} />}
+      {modalOpen && (
+        <Modal
+          setPerksSetting={handlePerksSetting}
+          handleClickedOutsideOfModal={handleClickedOutsideOfModal}
+        />
+      )}
     </>
   );
 }

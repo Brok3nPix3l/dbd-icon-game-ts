@@ -2,6 +2,7 @@ import { PerksSetting } from "./App";
 
 type ModalProps = {
   setPerksSetting: (perksSetting: PerksSetting) => void;
+  handleClickedOutsideOfModal: () => void;
 };
 
 export default function Modal(props: ModalProps) {
@@ -12,6 +13,7 @@ export default function Modal(props: ModalProps) {
         aria-labelledby="modal-title"
         role="dialog"
         aria-modal="true"
+        onClick={() => props.handleClickedOutsideOfModal()}
       >
         {/* Background backdrop, show/hide based on modal state.
 

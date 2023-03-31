@@ -1,2 +1,1 @@
-- click out of modal closes modal
 - different background "something like DBD" - Russell
