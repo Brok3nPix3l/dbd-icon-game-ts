@@ -171,12 +171,21 @@ import zanshinTactics from "/IconPerks_zanshinTactics.webp";
 import { ICON_TRANSFORMATION } from "./Icon";
 import { v4 as uuid } from "uuid";
 import shuffleArray from "shuffle-array";
+import darkMode from "./images/dark-mode.png";
+import lightMode from "./images/light-mode.png";
 
 function App() {
   const [score, setScore] = useState(0);
   const [totalGuesses, setTotalGuesses] = useState(0);
   type Answer = null | "correct" | "wrong";
   const [currentAnswer, setCurrentAnswer] = useState<Answer>(null);
+  const [colorTheme, setColorTheme] = useState<ColorTheme>(
+    localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ? "dark"
+      : "light"
+  );
   const [perks, setPerks] = useState(
     shuffleArray([
       aceInTheHole,
@@ -410,42 +419,87 @@ function App() {
     setPerkIndex((prev) => prev + 1);
   };
 
+  type ColorTheme = "light" | "dark";
+  const handleColorThemeToggle = (colorTheme: ColorTheme) => {
+    if (colorTheme === "light") {
+      localStorage.theme = "light";
+      setColorTheme("light");
+    } else {
+      localStorage.theme = "dark";
+      setColorTheme("dark");
+    }
+    updateThemeDOM();
+  };
+
+  const updateThemeDOM = () => {
+    console.log("updating DOM");
+    if (
+      localStorage.theme === "dark" ||
+      (!("theme" in localStorage) &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
   return (
-    <div className="flex h-screen flex-col justify-center gap-20 bg-gradient-to-b from-stone-500 to-stone-700">
-      <>
-        <h1 className="text-center text-5xl text-slate-900">
-          Which icon is correct?
-        </h1>
-        <div className="flex justify-center gap-1 p-2">
-          {/* TODO: this gets run any time the component re-renders. need to fix this, but it works for now */}
-          {transformationsPermutation.map((transform: ICON_TRANSFORMATION) => {
-            return (
-              <Icon
-                imageSrc={currentPerk}
-                handleSelectedIcon={handleSelectedIcon}
-                transform={transform}
-                key={uuid()}
-              />
-            );
-          })}
-        </div>
-        <div className="flex justify-center text-4xl text-slate-900">
-          Score:{" "}
-          <span
-            className={`whitespace-pre ${
-              currentAnswer === "correct"
-                ? "text-green-400"
-                : currentAnswer === "wrong"
-                ? "text-red-500"
-                : ""
-            }`}
+    <div className="h-screen bg-gradient-to-b from-neutral-50 to-neutral-600 dark:from-neutral-800 dark:to-neutral-900">
+      <div className="absolute right-0 top-0 flex gap-4 pr-2">
+        {colorTheme === "dark" ? (
+          <button
+            className="w-10"
+            onClick={() => handleColorThemeToggle("light")}
           >
-            {" "}
-            {score}{" "}
-          </span>
-          <span>{totalGuesses === 0 ? "" : `/ ${totalGuesses}`}</span>
-        </div>
-      </>
+            <img src={lightMode} />
+          </button>
+        ) : (
+          <button
+            className="w-10"
+            onClick={() => handleColorThemeToggle("dark")}
+          >
+            <img src={darkMode} />
+          </button>
+        )}
+      </div>
+      <div className="flex h-screen flex-col justify-center gap-20">
+        <>
+          <h1 className="text-center text-5xl text-slate-800 dark:text-slate-100">
+            Which icon is correct?
+          </h1>
+          <div className="flex justify-center gap-1 p-2">
+            {transformationsPermutation.map(
+              (transform: ICON_TRANSFORMATION) => {
+                return (
+                  <Icon
+                    imageSrc={currentPerk}
+                    handleSelectedIcon={handleSelectedIcon}
+                    transform={transform}
+                    key={uuid()}
+                  />
+                );
+              }
+            )}
+          </div>
+          <div className="flex justify-center text-4xl text-slate-800 dark:text-slate-100">
+            Score:{" "}
+            <span
+              className={`whitespace-pre ${
+                currentAnswer === "correct"
+                  ? "text-green-400"
+                  : currentAnswer === "wrong"
+                  ? "text-red-500"
+                  : ""
+              }`}
+            >
+              {" "}
+              {score}{" "}
+            </span>
+            <span>{totalGuesses === 0 ? "" : `/ ${totalGuesses}`}</span>
+          </div>
+        </>
+      </div>
     </div>
   );
 }
