@@ -1,10 +1,12 @@
 import { useState } from "react";
-import settings from "./images/settings.png";
+import blackSettings from "./images/settings.png";
+import whiteSettings from "./images/settings-white.png";
 import Modal from "./Modal";
-import { PerksSetting } from "./App";
+import { PerksSetting, ColorTheme } from "./App";
 
 type SettingsProps = {
   setPerksSetting: (perksSetting: PerksSetting) => void;
+  colorTheme: ColorTheme;
 };
 
 export default function Settings(props: SettingsProps) {
@@ -23,7 +25,10 @@ export default function Settings(props: SettingsProps) {
   return (
     <>
       <button className="w-10">
-        <img src={settings} onClick={() => setModalOpen(true)} />
+        <img
+          src={props.colorTheme === "light" ? blackSettings : whiteSettings}
+          onClick={() => setModalOpen(true)}
+        />
       </button>
       {modalOpen && (
         <Modal

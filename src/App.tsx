@@ -177,11 +177,16 @@ import lightMode from "./images/light-mode.png";
 import Settings from "./Settings";
 
 export type PerksSetting = "all" | "survivor" | "killer";
+export type ColorTheme = "light" | "dark";
+type Answer = null | "correct" | "wrong";
+type Perk = {
+  imageSource: string;
+  role: "survivor" | "killer";
+};
 
 function App() {
   const [score, setScore] = useState<number>(0);
   const [totalGuesses, setTotalGuesses] = useState<number>(0);
-  type Answer = null | "correct" | "wrong";
   const [currentAnswer, setCurrentAnswer] = useState<Answer>(null);
   const [colorTheme, setColorTheme] = useState<ColorTheme>(
     localStorage.theme === "dark" ||
@@ -386,10 +391,6 @@ function App() {
     ICON_TRANSFORMATION[]
   >(shuffleArray([none, invertY, rotate180, invertYRotate180]));
 
-  type Perk = {
-    imageSource: string;
-    role: "survivor" | "killer";
-  };
   const survivorPerks = perksArray.filter((perk) => {
     return perk.role === "survivor";
   });
@@ -440,7 +441,6 @@ function App() {
     setPerkIndex((prev) => prev + 1);
   };
 
-  type ColorTheme = "light" | "dark";
   const handleColorThemeToggle = (colorTheme: ColorTheme) => {
     if (colorTheme === "light") {
       localStorage.theme = "light";
@@ -469,7 +469,7 @@ function App() {
     <div className="h-screen bg-gradient-to-b from-neutral-100 to-neutral-400 dark:from-neutral-800 dark:to-neutral-900">
       <div className="absolute top-0 flex w-screen justify-between p-2">
         <div>
-          <Settings setPerksSetting={setPerksSetting} />
+          <Settings setPerksSetting={setPerksSetting} colorTheme={colorTheme} />
         </div>
         <div className="capitalize text-slate-800 dark:text-slate-100">
           Perks: {perksSetting}
