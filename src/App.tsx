@@ -411,7 +411,7 @@ function App() {
   };
 
   return (
-    <div className="flex h-screen flex-col justify-center gap-20 bg-gradient-to-b from-stone-900 to-stone-950">
+    <div className="flex h-screen flex-col justify-center gap-20 bg-gradient-to-b from-stone-500 to-stone-700">
       <>
         <h1 className="text-center text-5xl text-slate-900">
           Which icon is correct?
