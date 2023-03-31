@@ -179,8 +179,8 @@ import Settings from "./Settings";
 export type PerksSetting = "all" | "survivor" | "killer";
 
 function App() {
-  const [score, setScore] = useState(0);
-  const [totalGuesses, setTotalGuesses] = useState(0);
+  const [score, setScore] = useState<number>(0);
+  const [totalGuesses, setTotalGuesses] = useState<number>(0);
   type Answer = null | "correct" | "wrong";
   const [currentAnswer, setCurrentAnswer] = useState<Answer>(null);
   const [colorTheme, setColorTheme] = useState<ColorTheme>(
@@ -360,7 +360,7 @@ function App() {
     { imageSource: zanshinTactics, role: "killer" },
   ];
   const [perks, setPerks] = useState<Perk[]>(shuffleArray(perksArray));
-  const [perkIndex, setPerkIndex] = useState(0);
+  const [perkIndex, setPerkIndex] = useState<number>(0);
   const [perksSetting, setPerksSetting] = useState<PerksSetting>("all");
   useEffect(() => {
     resetGame();
@@ -368,6 +368,9 @@ function App() {
     if (perksSetting === "survivor") setPerks(shuffleArray(survivorPerks));
     if (perksSetting === "killer") setPerks(shuffleArray(killerPerks));
   }, [perksSetting]);
+  const [currentPerk, setCurrentPerk] = useState<string>(
+    perks[perkIndex].imageSource
+  );
 
   const resetGame = () => {
     setScore(0);
@@ -394,7 +397,9 @@ function App() {
     return perk.role === "killer";
   });
 
-  const currentPerk = perks[perkIndex].imageSource;
+  const nextPerk = perks[perkIndex].imageSource;
+  new Image().src = nextPerk;
+  console.log(nextPerk);
 
   const correctAnswer = () => {
     console.log("correct");
@@ -430,6 +435,7 @@ function App() {
       setPerkIndex(0);
       return;
     }
+    setCurrentPerk(nextPerk);
     console.log("Next perk");
     setPerkIndex((prev) => prev + 1);
   };
