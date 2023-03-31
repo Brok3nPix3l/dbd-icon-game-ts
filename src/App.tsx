@@ -491,7 +491,7 @@ function App() {
           <h1 className="text-center text-5xl text-slate-800 dark:text-slate-100">
             Which icon is correct?
           </h1>
-          <div className="flex flex-wrap justify-center gap-1 p-2 min-[800px]:flex-nowrap">
+          <div className="ml-auto mr-auto grid w-[vw] grid-cols-2 gap-1 p-2 min-[550px]:w-auto min-[800px]:flex min-[800px]:justify-center">
             {transformationsPermutation.map(
               (transform: ICON_TRANSFORMATION) => {
                 return (

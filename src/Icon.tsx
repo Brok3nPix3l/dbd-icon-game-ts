@@ -12,10 +12,10 @@ type IconProps = {
 
 export default function Icon(props: IconProps) {
   return (
-    <div className="border-4 border-slate-900 bg-slate-700 dark:border-stone-200 dark:bg-stone-700">
+    <div className="flex justify-center border-4 border-slate-900 bg-slate-700 dark:border-stone-200 dark:bg-stone-700">
       <img
         src={props.imageSrc}
-        className={`w-[256px] cursor-pointer
+        className={`cursor-pointer
         ${props.transform === "invert-y" && "-scale-x-100"} ${
           props.transform === "rotate 180" && "rotate-180"
         } ${

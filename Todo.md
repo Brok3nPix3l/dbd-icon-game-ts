@@ -1,1 +1,2 @@
 - different background "something like DBD" - Russell
+- prevent each new icon flickering
