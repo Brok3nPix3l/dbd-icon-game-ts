@@ -1,1 +1,4 @@
 - different background "something like DBD" - Russell
+- add gamemodes:
+    - time attack
+    - endless

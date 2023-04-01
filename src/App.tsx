@@ -365,7 +365,7 @@ function App() {
     { imageSource: zanshinTactics, role: "killer" },
   ];
   const [perks, setPerks] = useState<Perk[]>(shuffleArray(perksArray));
-  const [perkIndex, setPerkIndex] = useState<number>(0);
+  const [perkIndex, setPerkIndex] = useState<number>(1);
   const [perksSetting, setPerksSetting] = useState<PerksSetting>("all");
   useEffect(() => {
     resetGame();
@@ -374,7 +374,7 @@ function App() {
     if (perksSetting === "killer") setPerks(shuffleArray(killerPerks));
   }, [perksSetting]);
   const [currentPerk, setCurrentPerk] = useState<string>(
-    perks[perkIndex].imageSource
+    perks[0].imageSource
   );
 
   const resetGame = () => {
