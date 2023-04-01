@@ -5,7 +5,7 @@ import Modal from "./Modal";
 import { PerksSetting, ColorTheme } from "./App";
 
 type SettingsProps = {
-  setPerksSetting: (perksSetting: PerksSetting) => void;
+  handlePerksSettingsUpdated: (perksSetting: PerksSetting) => void;
   colorTheme: ColorTheme;
 };
 
@@ -15,7 +15,7 @@ export default function Settings(props: SettingsProps) {
   const handlePerksSetting = (setting: PerksSetting) => {
     console.log(setting);
     setModalOpen(false);
-    props.setPerksSetting(setting);
+    props.handlePerksSettingsUpdated(setting);
   };
 
   const handleClickedOutsideOfModal = () => {
