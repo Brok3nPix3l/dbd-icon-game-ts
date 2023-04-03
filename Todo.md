@@ -2,3 +2,4 @@
 - add gamemodes:
     - time attack
     - endless
+- add missing perks
