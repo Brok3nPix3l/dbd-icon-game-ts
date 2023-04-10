@@ -498,10 +498,8 @@ function App() {
     if (perksSetting === "all") newPerks = shuffleArray(perksArray);
     if (perksSetting === "survivor") newPerks = shuffleArray(survivorPerks);
     if (perksSetting === "killer") newPerks = shuffleArray(killerPerks);
-    setCurrentPerk(newPerks[0]);
     setPerks(newPerks);
   };
-  const [currentPerk, setCurrentPerk] = useState<Perk>(perks[0]);
 
   const resetGame = () => {
     console.log("resetting game");
@@ -509,7 +507,6 @@ function App() {
     setTotalGuesses(0);
     setNextPerkIndex(1);
     setPerks((prev) => shuffleArray(prev));
-    setCurrentPerk(perks[0]);
   };
 
   const none: ICON_TRANSFORMATION = "none";
@@ -527,6 +524,9 @@ function App() {
     return perk.role === "killer";
   });
 
+  const currentPerkIndex =
+    nextPerkIndex === 0 ? perks.length - 1 : nextPerkIndex - 1;
+  const currentPerk = perks[currentPerkIndex];
   const nextPerk = perks[nextPerkIndex];
   useEffect(() => {
     if (!nextPerk) {
@@ -566,7 +566,6 @@ function App() {
     setTransformationsPermutation(
       shuffleArray([none, invertY, rotate180, invertYRotate180])
     );
-    setCurrentPerk(nextPerk);
     if (nextPerkIndex === perks.length - 1) {
       console.log("Shuffling perks");
       setPerks((prev) => shuffleArray(prev));
