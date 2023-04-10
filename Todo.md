@@ -2,3 +2,9 @@
 - add gamemodes:
     - time attack
     - endless
+- fix "clicked outside of modal" interaction
+    - add "x" button and prevent escaping modal without clicking "x" button?
+- clicking button shouldn't close modal
+- Make new branch and move Settings changes to it
+- Change firstPerk to be a derived value
+    - currentPerkIndex can be derived from (nextPerkIndex - 1)

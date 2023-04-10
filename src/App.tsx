@@ -236,7 +236,8 @@ import Settings from "./Settings";
 import darkMode from "./images/dark-mode.png";
 import lightMode from "./images/light-mode.png";
 
-export type PerksSetting = "all" | "survivor" | "killer";
+export type PerksValue = "all" | "survivor" | "killer";
+export type ValueType = PerksValue;
 export type ColorTheme = "light" | "dark";
 type Answer = null | "correct" | "wrong";
 type Perk = {
@@ -488,9 +489,9 @@ function App() {
   );
   const [perks, setPerks] = useState<Perk[]>(() => shuffleArray(perksArray));
   const [nextPerkIndex, setNextPerkIndex] = useState<number>(1);
-  const [perksSetting, setPerksSetting] = useState<PerksSetting>("all");
-  const handlePerksSettingsUpdated = (perksSetting: PerksSetting) => {
-    console.log("perk settings changed");
+  const [perksSetting, setPerksSetting] = useState<PerksValue>("all");
+  const handlePerksSettingsUpdated = (perksSetting: PerksValue) => {
+    console.log(`Perk setting changed to '${perksSetting}'`);
     setPerksSetting(perksSetting);
     resetGame();
     let newPerks: Perk[] = [];
@@ -507,6 +508,8 @@ function App() {
     setScore(0);
     setTotalGuesses(0);
     setNextPerkIndex(1);
+    setPerks((prev) => shuffleArray(prev));
+    setCurrentPerk(perks[0]);
   };
 
   const none: ICON_TRANSFORMATION = "none";
