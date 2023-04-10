@@ -6,12 +6,7 @@ import { Option } from "./SettingsOption";
 
 type ModalProps = {
   handleClickedOutsideOfModal: () => void;
-  settings: Array<
-    | Setting<PerksValue, Option<PerksValue>>
-    | Setting<GamemodeValue, Option<GamemodeValue>>
-    | Setting<TimerValue, Option<TimerValue>>
-  >;
-  // settings: Array<SettingType>;
+  settings: Array<SettingType>;
 };
 
 export default function Modal(props: ModalProps) {
@@ -48,7 +43,11 @@ export default function Modal(props: ModalProps) {
                             className="h-1 bg-black dark:bg-white"
                           />
                         )}
-                        <SettingsRow setting={setting} key={uuid()} />
+                        <SettingsRow
+                          // {/* <SettingsRow<(typeof setting)["options"][0]["value"],Option<(typeof setting)["options"][0]["value"]>> */}
+                          setting={setting}
+                          key={uuid()}
+                        />
                       </>
                     );
                   })}
