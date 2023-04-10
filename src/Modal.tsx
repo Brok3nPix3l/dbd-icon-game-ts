@@ -1,11 +1,17 @@
-import { SettingType } from "./Settings";
+import { GamemodeValue, PerksValue, TimerValue } from "./App";
+import { Setting, SettingType } from "./Settings";
 import SettingsRow from "./SettingsRow";
 import { v4 as uuid } from "uuid";
+import { Option } from "./SettingsOption";
 
 type ModalProps = {
   handleClickedOutsideOfModal: () => void;
-  // settings: Array<Setting<PerksValue, Option<PerksValue>>>;
-  settings: Array<SettingType>;
+  settings: Array<
+    | Setting<PerksValue, Option<PerksValue>>
+    | Setting<GamemodeValue, Option<GamemodeValue>>
+    | Setting<TimerValue, Option<TimerValue>>
+  >;
+  // settings: Array<SettingType>;
 };
 
 export default function Modal(props: ModalProps) {
