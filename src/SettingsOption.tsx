@@ -1,4 +1,4 @@
-import { ValueType, PerksValue } from "./App";
+import { ValueType, PerksValue, TimerValue, GamemodeValue } from "./App";
 
 export type Option<Type> = {
   title: string;
@@ -7,6 +7,8 @@ export type Option<Type> = {
 };
 
 export type PerksOption = Option<PerksValue>;
+export type GamemodeOption = Option<GamemodeValue>;
+export type TimerOption = Option<TimerValue>;
 
 type SettingsOptionProps<T> = {
   option: Option<T>;

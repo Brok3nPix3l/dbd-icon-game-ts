@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import shuffleArray from "shuffle-array";
 import { v4 as uuid } from "uuid";
 
@@ -237,7 +237,9 @@ import darkMode from "./images/dark-mode.png";
 import lightMode from "./images/light-mode.png";
 
 export type PerksValue = "all" | "survivor" | "killer";
-export type ValueType = PerksValue;
+export type GamemodeValue = "time attack" | "endless";
+export type TimerValue = 30 | 60 | 120;
+export type ValueType = PerksValue | GamemodeValue | TimerValue;
 export type ColorTheme = "light" | "dark";
 type Answer = null | "correct" | "wrong";
 type Perk = {
@@ -490,6 +492,10 @@ function App() {
   const [perks, setPerks] = useState<Perk[]>(() => shuffleArray(perksArray));
   const [nextPerkIndex, setNextPerkIndex] = useState<number>(1);
   const [perksSetting, setPerksSetting] = useState<PerksValue>("all");
+  const [gamemodeSetting, setGamemodeSetting] =
+    useState<GamemodeValue>("endless");
+  const timerDuration = useRef<number>(60);
+  const timerInterval = useRef<number>();
   const handlePerksSettingsUpdated = (perksSetting: PerksValue) => {
     console.log(`Perk setting changed to '${perksSetting}'`);
     setPerksSetting(perksSetting);
@@ -499,6 +505,28 @@ function App() {
     if (perksSetting === "survivor") newPerks = shuffleArray(survivorPerks);
     if (perksSetting === "killer") newPerks = shuffleArray(killerPerks);
     setPerks(newPerks);
+  };
+  const handleGamemodeSettingsUpdated = (gamemodeSetting: GamemodeValue) => {
+    console.log(`Gamemode setting changed to '${gamemodeSetting}'`);
+    setGamemodeSetting(gamemodeSetting);
+    if (timerInterval.current) clearInterval(timerInterval.current);
+    if (gamemodeSetting === "time attack") {
+      setTimer(timerDuration.current);
+      timerInterval.current = setInterval(
+        () =>
+          setTimer((prev) => {
+            if (prev > 0) return prev - 1;
+            clearInterval(timerInterval.current);
+            return prev;
+          }),
+        1000
+      );
+    }
+    resetGame();
+  };
+  const handleTimerSettingsUpdated = (timerSetting: TimerValue) => {
+    console.log(`Time setting changed to ${timerSetting}`);
+    timerDuration.current = timerSetting;
   };
 
   const resetGame = () => {
@@ -561,6 +589,8 @@ function App() {
     return () => clearTimeout(timeout);
   }, [totalGuesses]);
 
+  const [timer, setTimer] = useState<number>(0);
+
   const generateNewIcons = () => {
     console.log("generating new icons");
     setTransformationsPermutation(
@@ -606,6 +636,8 @@ function App() {
         <div>
           <Settings
             handlePerksSettingsUpdated={handlePerksSettingsUpdated}
+            handleGamemodeSettingsUpdated={handleGamemodeSettingsUpdated}
+            handleTimerSettingsUpdated={handleTimerSettingsUpdated}
             colorTheme={colorTheme}
           />
         </div>
@@ -632,6 +664,23 @@ function App() {
       </div>
       <div className="flex h-screen flex-col justify-center min-[800px]:gap-20">
         <>
+          {gamemodeSetting === "time attack" && (
+            <div className="text-center text-4xl dark:text-white">
+              {timer > 0 ? (
+                `Timer: ${timer}`
+              ) : (
+                <>
+                  Time's Up!{" "}
+                  <span
+                    className="cursor-pointer text-blue-500 underline dark:text-blue-600"
+                    onClick={() => handleGamemodeSettingsUpdated("time attack")}
+                  >
+                    Play Again?
+                  </span>
+                </>
+              )}
+            </div>
+          )}
           <h1 className="text-center text-5xl text-slate-800 dark:text-slate-100">
             Which icon is correct?
           </h1>
@@ -644,6 +693,7 @@ function App() {
                     handleSelectedIcon={handleSelectedIcon}
                     transform={transform}
                     key={uuid()}
+                    disabled={gamemodeSetting === "time attack" && timer === 0}
                   />
                 );
               }
