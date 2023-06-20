@@ -45,6 +45,8 @@ export default function Modal(props: ModalProps) {
                         )}
                         <SettingsRow
                           // {/* <SettingsRow<(typeof setting)["options"][0]["value"],Option<(typeof setting)["options"][0]["value"]>> */}
+                          // todo fix this type error
+                          // @ts-ignore
                           setting={setting}
                           key={uuid()}
                         />
