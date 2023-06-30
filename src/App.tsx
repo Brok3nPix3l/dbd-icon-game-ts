@@ -83,12 +83,14 @@ import flashbang from "/IconPerks_flashbang.webp";
 import flipFlop from "/IconPerks_flip-Flop.webp";
 import fogwise from "/IconPerks_fogwise.webp";
 import forThePeople from "/IconPerks_forThePeople.webp";
+import forcedHesitation from "/IconPerks_forcedHesitation.webp";
 import forcedPenance from "/IconPerks_forcedPenance.webp";
 import franklinsDemise from "/IconPerks_franklinsDemise.webp";
 import friendlyCompetition from "/IconPerks_friendlyCompetition.webp";
 import furtiveChase from "/IconPerks_furtiveChase.webp";
 import gameAFoot from "/IconPerks_gameAfoot.webp";
 import gearhead from "/IconPerks_gearhead.webp";
+import geneticLimits from "/IconPerks_geneticLimits.webp";
 import grimEmbrace from "/IconPerks_grimEmbrace.webp";
 import guardian from "/IconPerks_guardian.webp";
 import hangmansTrick from "/IconPerks_hangmansTrick.webp";
@@ -131,7 +133,9 @@ import lightweight from "/IconPerks_lightweight.webp";
 import lithe from "/IconPerks_lithe.webp";
 import lowProfile from "/IconPerks_lowProfile.webp";
 import luckyBreak from "/IconPerks_luckyBreak.webp";
+import machineLearning from "/IconPerks_machineLearning.webp";
 import madGrid from "/IconPerks_madGrit.webp";
+import madeForThis from "/IconPerks_madeForThis.webp";
 import makeYourChoice from "/IconPerks_makeYourChoice.webp";
 import mercilessStorm from "/IconPerks_mercilessStorm.webp";
 import mettleOfMan from "/IconPerks_mettleOfMan.webp";
@@ -176,6 +180,7 @@ import resurgence from "/IconPerks_resurgence.webp";
 import rookieSpirit from "/IconPerks_rookieSpirit.webp";
 import saboteur from "/IconPerks_saboteur.webp";
 import saveTheBestForLast from "/IconPerks_saveTheBestForLast.webp";
+import scavenger from "/IconPerks_scavenger.webp";
 import scourgeHookFloodsOfRage from "/IconPerks_scourgeHookFloodsOfRage.webp";
 import scourgeHookGiftOfPain from "/IconPerks_scourgeHookGiftOfPain.webp";
 import scourgeHookMonstrousShrine from "/IconPerks_scourgeHookMonstrousShrine.webp";
@@ -216,6 +221,7 @@ import thrillingTremors from "/IconPerks_thrillingTremors.webp";
 import thwack from "/IconPerks_thwack.webp";
 import tinkerer from "/IconPerks_tinkerer.webp";
 import trailOfTorment from "/IconPerks_trailOfTorment.webp";
+import troubleshooter from "/IconPerks_troubleshooter.webp";
 import unbreakable from "/IconPerks_unbreakable.webp";
 import unnervingPresence from "/IconPerks_unnervingPresence.webp";
 import unrelenting from "/IconPerks_unrelenting.webp";
@@ -305,10 +311,13 @@ const perksArray: Perk[] = [
   { imageSource: dragonsGrip, role: "killer" },
   { imageSource: deathbound, role: "killer" },
   { imageSource: trailOfTorment, role: "killer" },
+  { imageSource: troubleshooter, role: "survivor" },
+  { imageSource: forcedHesitation, role: "killer" },
   { imageSource: forcedPenance, role: "killer" },
   { imageSource: hexRetribution, role: "killer" },
   { imageSource: deadMansSwitch, role: "killer" },
   { imageSource: gearhead, role: "killer" },
+  { imageSource: geneticLimits, role: "killer" },
   { imageSource: aceInTheHole, role: "survivor" },
   { imageSource: adrenaline, role: "survivor" },
   { imageSource: aftercare, role: "survivor" },
@@ -401,7 +410,9 @@ const perksArray: Perk[] = [
   { imageSource: lightweight, role: "survivor" },
   { imageSource: lithe, role: "survivor" },
   { imageSource: luckyBreak, role: "survivor" },
+  { imageSource: machineLearning, role: "killer" },
   { imageSource: madGrid, role: "killer" },
+  { imageSource: madeForThis, role: "survivor" },
   { imageSource: makeYourChoice, role: "killer" },
   { imageSource: mercilessStorm, role: "killer" },
   { imageSource: mettleOfMan, role: "survivor" },
@@ -436,6 +447,7 @@ const perksArray: Perk[] = [
   { imageSource: resilience, role: "survivor" },
   { imageSource: saboteur, role: "survivor" },
   { imageSource: saveTheBestForLast, role: "killer" },
+  { imageSource: scavenger, role: "survivor" },
   { imageSource: scourgeHookFloodsOfRage, role: "killer" },
   { imageSource: scourgeHookMonstrousShrine, role: "killer" },
   { imageSource: selfCare, role: "survivor" },
